@@ -4,7 +4,8 @@ import {  MenuController, NavController, AlertController, ToastController, Loadi
 import { ListaUser } from "src/app/modelos";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { ServicesUsuarioServiceProvider } from "src/app/services/services-usuario-service";
-import { DocumentViewer, DocumentViewerOptions } from "@ionic-native/document-viewer/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { Network } from "@ionic-native/network/ngx";
 
 @Component({
@@ -44,7 +45,8 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private usuarioService: ServicesUsuarioServiceProvider,
-    private document: DocumentViewer,
+    private file: File,
+    private fileOpener: FileOpener,
     private network: Network
   ) {
     this.statusBar.show();
@@ -54,17 +56,17 @@ export class LoginPage implements OnInit {
 
     // ***********************
 
-    if (network.type === "none" || network.type === "unknow") {
+    if (this.network.type === "none" || this.network.type === "unknow") {
       this.avisaDesconexion();
     }
 
-    const disconnectSicription = network.onDisconnect().subscribe(() => {
+    const disconnectSicription = this.network.onDisconnect().subscribe(() => {
       if (this.conectado) {
         this.avisaDesconexion();
       }
     });
 
-    const connectSicription = network.onConnect().subscribe(() => {
+    const connectSicription = this.network.onConnect().subscribe(() => {
       setTimeout(() => {
         if (!this.conectado) {
           this.avisaConexion();
@@ -616,11 +618,18 @@ export class LoginPage implements OnInit {
   // -------------------------------------
 
   abrirManual() {
-    const options: DocumentViewerOptions = {
-      title: "My PDF"
-    };
-
-    this.document.viewDocument("assets/Manual.pdf", "application/pdf", options);
+    let filename: string = 'Manual.pdf';
+    this.file.copyFile(this.file.applicationDirectory + 'www/assets/', filename, this.file.externalCacheDirectory, filename)
+      .then(_ => {
+        this.fileOpener.open(this.file.externalCacheDirectory + filename, 'application/pdf')
+          .then(_ => {
+            console.log('Todo bien');
+          })
+          .catch(e => this.presentToast("Error opening file: " + JSON.stringify(e)));
+      })
+      .catch(e => {
+        this.presentToast("Error copying file: " + JSON.stringify(e));
+      });
   }
 
   toggleMenu() {

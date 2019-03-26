@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Plugins
 import { File } from "@ionic-native/file/ngx";
-import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { Network } from "@ionic-native/network/ngx";
 
 
@@ -51,8 +51,8 @@ export const firebaseConfig = {
     SplashScreen,
     AngularFireDatabase,
     File,
-    DocumentViewer,
     Network,
+    FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="toggleMenu()">
+                <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            <h1>login</h1>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <div style="padding-top: 20%;">
+        <ion-slides pager="true" [options]="slideOpts" #slideLogin>
+            <ion-slide>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-subtitle>Ingrese sus credenciales</ion-card-subtitle>
+                    </ion-card-header>
+
+                    <ion-card-content>
+                        <ion-list>
+                            <img src="assets/imgs/user.png" />
+                        </ion-list>
+                        <ion-button disabled={{!conectado}} expand="block" (click)="mostrarInput()">
+                            <ion-icon name="log-in" slot="end"></ion-icon>
+                            Iniciar sesión
+                        </ion-button>
+                        <ion-item disabled={{!conectado}}>
+                            <small (click)="this.agregarUsuario('', '', '', '', '')">No te has registrado?</small>
+                        </ion-item>
+                    </ion-card-content>
+
+                    <ion-card-content>
+                        <small (click)="abrirManual()">Manual de uso</small>
+                    </ion-card-content>
+                </ion-card>
+            </ion-slide>
+
+            <!-- ============================================= -->
+
+            <ion-slide style="padding-bottom: 10%;">
+                <ion-card>
+                    <img src="assets/imgs/check.jpg" class="slide-image" />
+                    <h2 class="slide-title">¿Listo para empezar?</h2>
+                    <ion-button slot="end" color="wuite" style="color: blueviolet;" (click)="ingresar()">
+                        Continuar
+                        <ion-icon name="arrow-forward"></ion-icon>
+                    </ion-button>
+                </ion-card>
+            </ion-slide>
+        </ion-slides>
+    </div>
+</ion-content>
+
+
+
+<ion-menu side="start" menuId="login" contentId="login">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title>Menú Login</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content style="color: #51238d;">
+        <ion-list class="menu" style="background: #FAFCFD">
+            <ion-item disabled={{!conectado}} style="background: #058DA5; color:#51238d;" (click)="openPage('registro')">
+                <ion-icon style="margin-right: 5%" name="person-add"></ion-icon>
+                <ion-label>Registrarse</ion-label>
+            </ion-item>
+            <!-- <br>
+            <br>
+            <br>
+            <br> -->
+            <ion-item disabled={{!conectado}} style="background: #058DA5; color:red;" (click)="openPage('eliminarUsuario')">
+                <ion-icon style="margin-right: 5%" name="trash"></ion-icon>
+                <ion-label>Eliminar Usuario</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-router-outlet id="login"></ion-router-outlet>

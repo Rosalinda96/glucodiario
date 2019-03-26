@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar color="primary" padding>
+        <ion-buttons slot="start">
+            <ion-back-button text="Atrás" defaultHref="/diario"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <h1>Lista de {{ items.length }} alimentos</h1>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondoAgregar">
+    <img src="assets/imgs/ControlAlimentos.jpg">
+    <ion-searchbar color="primary" (ionInput)="getItems($event)" placeholder="Buscar" padding></ion-searchbar>
+
+    <ion-list class="animated fadeInDown">
+        <ion-item *ngFor="let item of items; let i = index;" class="fondoAgregar">
+            <ion-thumbnail item-start (click)="verDetalle(item)">
+                <img [src]="item.imagen" style="border-radius: 10px;">
+            </ion-thumbnail>
+
+            <ion-item color="detalles" style="border-radius: 10px;" (click)="unidadesInsulina(item)">
+                <h2>{{ item.nombre }}</h2>
+            </ion-item>
+        </ion-item>
+    </ion-list>
+
+
+
+    <ion-fab activated="false" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button ion-fab>
+            <ion-icon name="arrow-dropleft"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="start">
+            <ion-fab-button color="primary" ion-fab (click)="iraControlDiario()">
+                <ion-icon name="water"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="medium" ion-fab *ngIf="validarTipoDiabetes()" (click)="calcular()">
+                <ion-icon name="calculator"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
+</ion-content>

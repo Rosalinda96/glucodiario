@@ -1,0 +1,47 @@
+<ion-router-outlet id="principal"></ion-router-outlet>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button text="Atrás" defaultHref="/diario"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <h1>{{ grafico.titulo }}</h1>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <img src="assets/imgs/ControlDiario.jpg">
+    <ion-card class="ion-card">
+        <ion-card-header>
+            Gráfico de linea
+        </ion-card-header>
+        <ion-card-content>
+            <canvas #lineCanvas></canvas>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-card">
+        <ion-card-header>
+            Gráfico de barras
+        </ion-card-header>
+        <ion-card-content>
+            <canvas #barCanvas></canvas>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-card">
+        <ion-card-header>
+            Gráfico circular
+        </ion-card-header>
+        <ion-card-content>
+            <canvas #pieCanvas></canvas>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-card">
+        <ion-card-header>
+            Gráfico de anillos
+        </ion-card-header>
+        <ion-card-content>
+            <canvas #doughnutCanvas></canvas>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

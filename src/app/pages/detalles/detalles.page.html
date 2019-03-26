@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar color="primary" padding>
+        <ion-title>
+            <!-- <h1>{{item.nombre}}</h1> -->
+            <h1>{{ alimento.nombre}}</h1>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle>Artículo de investigación</ion-card-subtitle>
+            <ion-card-title>{{ alimento.nombre}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <img [src]="alimento.imagen" style="border-radius: 30px;">
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <ion-label>Puntos</ion-label>
+            <!-- esta pendiente-->
+            <ion-button fill="outline" slot="start">Marcar como favorito</ion-button>
+        </ion-item>
+
+        <ion-card-content>
+            {{ alimento.grPorcion }}{{ alimento.unidadPorcion }} de {{ alimento.nombre }} contiene {{ alimento.gramos }}{{ alimento.unidad }} de {{alimento.materia}}.
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-item class="activated" (click)="cerrar()">
+            <ion-icon name="close-circle" slot="start"></ion-icon>
+            <ion-label>CERRAR</ion-label>
+        </ion-item>
+    </ion-card>
+</ion-content>

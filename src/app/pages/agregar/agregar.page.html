@@ -1,0 +1,100 @@
+<ion-header>
+    <ion-toolbar color="primary" padding>
+        <ion-buttons slot="start">
+            <ion-back-button text="Atrás" defaultHref="/diario"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <h1>{{lista.titulo}}</h1>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list style="border: 3px solid #51238d; border-radius: 25px; height: 70px; width: 10px,">
+        <ion-item class="listaGlucometria">
+            <ion-label class="letra-lista" position="floating">Nuevo día</ion-label>
+            <ion-input [(ngModel)]="dias" type="number" (keyup.enter)="agregarDia()"></ion-input>
+        </ion-item>
+    </ion-list>
+
+
+
+    <ion-list #list>
+        <ion-grid class="listaGlucometria fondoListas" style="background-color: #4186ec; text-align: center; padding-left: 7%; padding-right: 7%;">
+            <ion-row>
+                <ion-col size="2">
+                    <b>Día</b>
+                </ion-col>
+                <ion-col size="7">
+                    <a><b style="color: black;">hora</b></a>
+                </ion-col>
+                <ion-col size="3">
+                    <a><b style="color: black;">valor</b></a>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-item-sliding #list *ngFor="let dia of lista.items; let i=index" class="animated fadeInDown">
+            <ion-item detail-none (click)="mostrarNota(dia)">
+                <ion-grid>
+                    <ion-row class="listaGlucometria" style="text-align: center;">
+                        <ion-col size="2" class="fondoListas">
+                            <b>{{dia.nombre}} </b>
+                        </ion-col>
+                        <ion-col size="7" [ngStyle]="{'background': dia.valorColorNota}">
+                            <a><b>{{dia.horaGlucometria}}</b></a>
+                        </ion-col>
+                        <ion-col size="3" [ngStyle]="{'background': dia.colorValor}">
+                            <a><b>{{dia.valorGlucometria}}</b></a>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+
+            <ion-item-options side="end">
+                <ion-item-option color="primary" icon-only (click)="editarHora(dia, i)">
+                    <ion-icon name="clock"></ion-icon>
+                    Hora
+                </ion-item-option>
+                <ion-item-option style="background: #DF01A5" con-only (click)="editarValor(dia, i)">
+                    <ion-icon name="water"></ion-icon>
+                    Valor
+                </ion-item-option>
+                <ion-item-option ion-button style="background: rgb(226, 110, 56)" con-only (click)="anadirNotas(dia, i)">
+                    <ion-icon name="clipboard"></ion-icon>
+                    Agregar nota
+                </ion-item-option>
+            </ion-item-options>
+
+            <ion-item-options side="start">
+                <ion-item-option ion-button color="danger" icon-only (click)="borrarDia(i, dia)">
+                    <ion-icon name="trash"></ion-icon>
+                </ion-item-option>
+                <ion-item-option ion-button style="background: rgb(71, 8, 243)" icon-only (click)="editarDia(dia, i)">
+                    <ion-icon name="create"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+
+
+
+
+
+    <ion-fab activated="false" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button ion-fab>
+            <ion-icon name="arrow-dropleft"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="start">
+            <ion-fab-button color="tertiary" ion-fab (click)="irAComidas()">
+                <ion-icon name="pizza"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="primary" ion-fab (click)="iraControlDiario()">
+                <ion-icon name="water"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="medium" ion-fab *ngIf="validarTipoDiabetes()" (click)="calcular()">
+                <ion-icon name="calculator"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
+
+</ion-content>

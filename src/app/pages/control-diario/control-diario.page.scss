@@ -1,0 +1,68 @@
+app-control-diario {
+    $colors: ( primary: #51238d, secondary: #32db64, detalles: #c5deea, danger: #f53d3d, light: #f4f4f4, dark: #222, sangre: #DF01A5, comentarios: #81F7F3, tenuePrimary: #2C0C6C, menu1: #058DA5, menu2: #075CF0);
+    .animated {
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+    @-webkit-keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    .fadeInDown {
+        -webkit-animation-name: fadeInDown;
+        animation-name: fadeInDown;
+    }
+    .listaGlucometria {
+        border-radius: 8px;
+        background: #FFFFFF;
+    }
+    .ion-card {
+        border-style: solid;
+        border-width: 2px;
+    }
+    .alert {
+        background-color: transparent;
+        box-shadow: 10px 5px 5px black;
+        button {
+            color: rgb(3, 3, 3);
+        }
+    }
+    .alerteliminacion {
+        background: #F01507;
+        box-shadow: 10px 5px 5px black;
+    }
+    .fondoAgregar {
+        background: #c5deea;
+        background: -moz-linear-gradient(-45deg, #c5deea 0%, #8abbd7 31%, #066dab 100%);
+        background: -webkit-linear-gradient(-45deg, #c5deea 0%, #8abbd7 31%, #066dab 100%);
+        background: linear-gradient(135deg, #c5deea 0%, #8abbd7 31%, #066dab 100%);
+    }
+    .opacity {
+        opacity: 0.5;
+    }
+    .opacityList {
+        background-color: red;
+    }
+}

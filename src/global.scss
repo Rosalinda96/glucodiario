@@ -3,9 +3,214 @@
 @import '~@ionic/angular/css/normalize.css';
 @import '~@ionic/angular/css/structure.css';
 @import '~@ionic/angular/css/typography.css';
-
 @import '~@ionic/angular/css/padding.css';
 @import '~@ionic/angular/css/float-elements.css';
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+$font-path: "../assets/fonts";
+$app-direction: ltr;
+:root {
+    /** primary **/
+    --ion-color-primary: #6323a0;
+    --ion-color-primary-rgb: 56, 128, 255;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #3171e0;
+    --ion-color-primary-tint: #4c8dff;
+    /** secondary **/
+    --ion-color-secondary: #D5A7F7;
+    --ion-color-secondary-rgb: 12, 209, 232;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #0bb8cc;
+    --ion-color-secondary-tint: #24d6ea;
+    /** tertiary **/
+    --ion-color-tertiary: #D59306;
+    --ion-color-tertiary-rgb: 112, 68, 255;
+    --ion-color-tertiary-contrast: #ffffff;
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+    --ion-color-tertiary-shade: #633ce0;
+    --ion-color-tertiary-tint: #7e57ff;
+    /** success **/
+    --ion-color-success: #10dc60;
+    --ion-color-success-rgb: 16, 220, 96;
+    --ion-color-success-contrast: #ffffff;
+    --ion-color-success-contrast-rgb: 255, 255, 255;
+    --ion-color-success-shade: #0ec254;
+    --ion-color-success-tint: #28e070;
+    /** warning **/
+    --ion-color-warning: #ffce00;
+    --ion-color-warning-rgb: 255, 206, 0;
+    --ion-color-warning-contrast: #ffffff;
+    --ion-color-warning-contrast-rgb: 255, 255, 255;
+    --ion-color-warning-shade: #e0b500;
+    --ion-color-warning-tint: #ffd31a;
+    /** danger **/
+    --ion-color-danger: #f04141;
+    --ion-color-danger-rgb: 245, 61, 61;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-contrast-rgb: 255, 255, 255;
+    --ion-color-danger-shade: #d33939;
+    --ion-color-danger-tint: #f25454;
+    /** dark **/
+    --ion-color-dark: #222428;
+    --ion-color-dark-rgb: 34, 34, 34;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255, 255, 255;
+    --ion-color-dark-shade: #1e2023;
+    --ion-color-dark-tint: #383a3e;
+    /** medium **/
+    --ion-color-medium: #0686D5;
+    --ion-color-medium-rgb: 152, 154, 162;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255, 255, 255;
+    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-tint: #a2a4ab;
+    /** light **/
+    --ion-color-light: #DF01A5;
+    --ion-color-light-rgb: 244, 244, 244;
+    --ion-color-light-contrast: #000000;
+    --ion-color-light-contrast-rgb: 0, 0, 0;
+    --ion-color-light-shade: #d7d8da;
+    --ion-color-light-tint: #f5f6f9;
+    /** comida **/
+    --ion-color-comida: #D59306;
+    --ion-color-comida-rgb: 213, 147, 6;
+    --ion-color-comida-contrast: #000000;
+    --ion-color-comida-contrast-rgb: 0, 0, 0;
+    --ion-color-comida-shade: #d7d8da;
+    --ion-color-comida-tint: #f5f6f9;
+    /** sangre **/
+    --ion-color-sangre: #DF01A5;
+    --ion-color-sangre-rgb: 213, 147, 6;
+    --ion-color-sangre-contrast: #000000;
+    --ion-color-sangre-contrast-rgb: 0, 0, 0;
+    --ion-color-sangre-shade: #d7d8da;
+    --ion-color-sangre-tint: #f5f6f9;
+    /** menu1 **/
+    --ion-color-menu1: #058DA5;
+    /** menu2 **/
+    --ion-color-menu2: #075CF0;
+    --ion-color-menu2-rgb: 213, 147, 6;
+    --ion-color-menu2-contrast: #000000;
+    --ion-color-menu2-contrast-rgb: 0, 0, 0;
+    --ion-color-menu2-shade: #d7d8da;
+    --ion-color-menu2-tint: #f5f6f9;
+    .letra-lista {
+        margin: 0px;
+        padding: 0px;
+        // font-family: cursive;
+        font-family: 'PT Sans';
+        font-weight: bold;
+        font-size: 25px;
+        // font-style: oblique;
+        ;
+    }
+    @-webkit-keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+        to {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    .animated {
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+    .fadeInDown {
+        -webkit-animation-name: fadeInDown;
+        animation-name: fadeInDown;
+    }
+    .listaGlucometria {
+        border-radius: 8px;
+        background: #FFFFFF;
+    }
+    .ion-card {
+        border-style: solid;
+        border-width: 2px;
+    }
+    .alert {
+        background-color: transparent;
+        box-shadow: 10px 5px 5px black;
+        button {
+            color: rgb(3, 3, 3);
+        }
+    }
+    .alerteliminacion {
+        background: #F01507;
+        box-shadow: 10px 5px 5px black;
+    }
+    .fondoAgregar {
+        overflow: unset !important;
+        background: rgba(159, 131, 210, 1);
+        background: -moz-linear-gradient(left, rgba(159, 131, 210, 1) 0%, rgba(141, 102, 199, 1) 22%, rgba(91, 20, 183, 1) 89%, rgba(83, 8, 181, 1) 99%, rgba(151, 92, 219, 1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(159, 131, 210, 1)), color-stop(22%, rgba(141, 102, 199, 1)), color-stop(89%, rgba(91, 20, 183, 1)), color-stop(99%, rgba(83, 8, 181, 1)), color-stop(100%, rgba(151, 92, 219, 1)));
+        background: -webkit-linear-gradient(left, rgba(159, 131, 210, 1) 0%, rgba(141, 102, 199, 1) 22%, rgba(91, 20, 183, 1) 89%, rgba(83, 8, 181, 1) 99%, rgba(151, 92, 219, 1) 100%);
+        background: -o-linear-gradient(left, rgba(159, 131, 210, 1) 0%, rgba(141, 102, 199, 1) 22%, rgba(91, 20, 183, 1) 89%, rgba(83, 8, 181, 1) 99%, rgba(151, 92, 219, 1) 100%);
+        background: -ms-linear-gradient(left, rgba(159, 131, 210, 1) 0%, rgba(141, 102, 199, 1) 22%, rgba(91, 20, 183, 1) 89%, rgba(83, 8, 181, 1) 99%, rgba(151, 92, 219, 1) 100%);
+        background: linear-gradient(to right, rgba(159, 131, 210, 1) 0%, rgba(141, 102, 199, 1) 22%, rgba(91, 20, 183, 1) 89%, rgba(83, 8, 181, 1) 99%, rgba(151, 92, 219, 1) 100%);
+    }
+    .fondoListas {
+        overflow: unset !important;
+        background: rgba(134, 138, 218, 1);
+        background: -moz-linear-gradient(left, rgba(134, 138, 218, 1) 0%, rgba(106, 111, 205, 1) 41%, rgba(66, 72, 189, 1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(134, 138, 218, 1)), color-stop(41%, rgba(106, 111, 205, 1)), color-stop(100%, rgba(66, 72, 189, 1)));
+        background: -webkit-linear-gradient(left, rgba(134, 138, 218, 1) 0%, rgba(106, 111, 205, 1) 41%, rgba(66, 72, 189, 1) 100%);
+        background: -o-linear-gradient(left, rgba(134, 138, 218, 1) 0%, rgba(106, 111, 205, 1) 41%, rgba(66, 72, 189, 1) 100%);
+        background: -ms-linear-gradient(left, rgba(134, 138, 218, 1) 0%, rgba(106, 111, 205, 1) 41%, rgba(66, 72, 189, 1) 100%);
+        background: linear-gradient(to right, rgba(134, 138, 218, 1) 0%, rgba(106, 111, 205, 1) 41%, rgba(66, 72, 189, 1) 100%);
+    }
+    .fondoToast {
+        font-family: 'PT Sans';
+        font-style: oblique;
+        text-align: center;
+        font-weight: bold;
+        font-weight: 900;
+        --background: #d5cfd8;
+        --border-color: rgba(73, 155, 234, 0.39);
+        --button-color: #FFDD00;
+        --color: #fff;
+        color: #51238d;
+    }
+    .opacity {
+        opacity: 0.5;
+    }
+    .opacityList {
+        background-color: rgb(224, 184, 243);
+    }
+    .menu {
+        // font-family: cursive;
+        font-family: 'PT Sans';
+        font-weight: bold;
+        font-size: 20px;
+        font-weight: 1500;
+        // font-style: oblique;
+        color: #3b0549;
+        background: #A3A5A8,
+    }
+    icon {
+        font-size: 64px;
+    }
+}
+
+$colors: ( primary: #51238d, secondary: #32db64, detalles: #c5deea, danger: #f53d3d, light: #f4f4f4, dark: #222, sangre: #DF01A5, comentarios: #81F7F3, tenuePrimary: #2C0C6C, menu1: #058DA5, menu2: #075CF0);

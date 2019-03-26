@@ -1,6 +1,6 @@
-## Aplicacion para gestionar as glucometrías de un paciente diabético, calcular bolus, corrección y hacer conteo de carbohidratos
+## Aplicación para gestionar las glucometrías de un paciente diabético, calcular bolus, corrección y hacer conteo de carbohidratos
 
- Gestión de usuarios y de glucometrías, los datos se guardan el Firebase y LocalStorage, se pueden exportar al almacebamiento del teléfono
+ Gestión de usuarios y de glucometrías, los datos se guardan el Firebase y LocalStorage, se pueden exportar al almacenamiento del teléfono
 
 
 

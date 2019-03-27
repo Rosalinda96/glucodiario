@@ -83,6 +83,8 @@ export class CarbohidratosPage implements OnInit {
           " " +
           item.unidad +
           ", y contiene " +
+          item.gramos +
+          " gr de " +
           item.materia +
           ".",
         buttons: ["OK"],

@@ -142,14 +142,12 @@ export class LoginPage implements OnInit {
         {
           name: "username",
           placeholder: "Usuario",
-          id: "username",
-          value: "1234"
+          id: "username"
         },
         {
           name: "pass",
           placeholder: "Contraseña",
-          type: "password",
-          value: "1234"
+          type: "password"
         }
       ],
       buttons: [

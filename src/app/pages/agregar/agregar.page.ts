@@ -36,6 +36,8 @@ export class AgregarPage implements OnInit {
     this.datosUser = this.glucoService.cargarUltimoLogueo()[0];
     this.indexLista = Number(this.activatedRoute.snapshot.paramMap.get("indexLista"));
     this.lista = this.datosUser.lista[this.indexLista];    
+
+    this.dias = this.day.toString();
   }
 
   ngOnInit() {}

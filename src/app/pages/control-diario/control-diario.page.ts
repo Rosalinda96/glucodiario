@@ -841,10 +841,10 @@ export class ControlDiarioPage implements OnInit {
   openPage(opcion: string) {
     switch (opcion) {
       case "salir":
+        this.menu.toggle();
         this.glucoService.cargarUltimoLogueo().pop();
         this.glucoService.guardarUltimoLogueo();
         this.navCtrl.navigateBack("login");
-        this.menu.toggle();
         break;
 
       case "exportar":

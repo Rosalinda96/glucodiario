@@ -25,12 +25,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBbtbgvb6N5VFVWILArqr2snKlweBEUjFk",
-  authDomain: "glucodiario-3cdbc.firebaseapp.com",
-  databaseURL: "https://glucodiario-3cdbc.firebaseio.com",
-  projectId: "glucodiario-3cdbc",
-  storageBucket: "glucodiario-3cdbc.appspot.com",
-  messagingSenderId: "69476793065"
+  apiKey: "AIzaSyCyxKsSacbSW07WyhtYq60HKxRBgbvfzcA",
+    authDomain: "glucodiario-f3657.firebaseapp.com",
+    databaseURL: "https://glucodiario-f3657.firebaseio.com",
+    projectId: "glucodiario-f3657",
+    storageBucket: "glucodiario-f3657.appspot.com",
+    messagingSenderId: "513008766134"
 };
 
 @NgModule({

@@ -59,10 +59,15 @@ export class ControlDiarioPage implements OnInit {
       setTimeout(() => {
         if (!this.conectado) {
           this.avisaConexion();
+          // Carga de datos a la nube cuando se inicie la app
+          this.glucoService.guardarUltimoLogueo();
+          this.usuarioService.editarUsuario(this.glucoService.cargarUltimoLogueo()[0]);
         }
       }, 3000);
     });
   }
+
+  
 
   // ------------------------------   internet ---------------------
 
@@ -451,8 +456,8 @@ export class ControlDiarioPage implements OnInit {
 
   async calcular() {
     let alert = await this.alertCtrl.create({
+      header: "Calcular",
       cssClass: "fondoAgregar",
-      header: "Editar Lista",
       inputs: [
         {
           type: "radio",

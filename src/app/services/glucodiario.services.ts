@@ -67,13 +67,10 @@ export class GlucoService {
     listas.push(this.lista);
 
     this.datosUser = new ListaUser(datosUser.user, datosUser.password, datosUser.nombres, datosUser.apellidos, datosUser.tipoDiabetes, datosUser.insulinatotal, listas); 
-                                  
+
     datosUser = this.datosUser;
-    this.cargarUltimoLogueo().pop();
+    this.cargarUltimoLogueo()[0] = datosUser;
     this.guardarUltimoLogueo();
-    this.cargarUltimoLogueo().push(datosUser);
-    this.guardarUltimoLogueo();
-      return;
   }
 
   borrarlista(lista: Lista, datosUser: ListaUser, indexLista: number) {

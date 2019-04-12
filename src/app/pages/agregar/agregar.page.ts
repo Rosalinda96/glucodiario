@@ -35,7 +35,7 @@ export class AgregarPage implements OnInit {
   ) {
     this.datosUser = this.glucoService.cargarUltimoLogueo()[0];
     this.indexLista = Number(this.activatedRoute.snapshot.paramMap.get("indexLista"));
-    this.lista = this.datosUser.lista[this.indexLista];    
+    this.lista = this.datosUser.lista[this.indexLista];
 
     this.dias = this.day.toString();
   }
@@ -456,9 +456,8 @@ export class AgregarPage implements OnInit {
 
  async calcular() {
     const alert = await this.alertCtrl.create({
-      header: "Alert",
-      subHeader: "Subtitle",
-      message: "This is an alert message.",
+      header: "Calcular",
+      cssClass: "fondoAgregar",
       inputs: [
         {
           type: "radio",

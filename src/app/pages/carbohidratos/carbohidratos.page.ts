@@ -96,9 +96,8 @@ export class CarbohidratosPage implements OnInit {
 
   async calcular() {
     const alert = await this.alertCtrl.create({
-      header: "Alert",
-      subHeader: "Subtitle",
-      message: "This is an alert message.",
+      header: "Calcular",
+      cssClass: "fondoAgregar",
       inputs: [
         {
           type: "radio",

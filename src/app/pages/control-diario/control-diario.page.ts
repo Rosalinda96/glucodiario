@@ -295,11 +295,7 @@ export class ControlDiarioPage implements OnInit {
               this.datosUser.lista = [];
             }
 
-            this.glucoService.agregarLista(
-              data,
-              this.datosUser.lista,
-              this.datosUser
-            );
+            this.glucoService.agregarLista(data, this.datosUser.lista, this.datosUser);
           }
         }
       ]
@@ -492,7 +488,8 @@ export class ControlDiarioPage implements OnInit {
                   {
                     name: "carbohidratos",
                     placeholder: "gr de carbohidratos",
-                    type: "number"
+                    type: "number",
+                    id: 'carbohidratos'
                   }
                 ],
                 buttons: [
@@ -537,7 +534,9 @@ export class ControlDiarioPage implements OnInit {
                   }
                 ]
               });
-              prompt.present();
+              prompt.present().then(() => {
+                document.getElementById('carbohidratos').focus();
+              });
             } else if (data == "correccion") {
               const prompt = await this.alertCtrl.create({
                 header: "Corrección",
@@ -546,7 +545,8 @@ export class ControlDiarioPage implements OnInit {
                   {
                     name: "glisemiaActual",
                     placeholder: "Glicemia actual",
-                    type: "number"
+                    type: "number",
+                    id: 'glisemiaActual'
                   },
                   {
                     name: "meta",
@@ -586,7 +586,7 @@ export class ControlDiarioPage implements OnInit {
                           header: "Unidades de unsulina",
                           subHeader:
                             "Para una glicemia actual de " +
-                            dataCorreccion.glisemiaActual +
+                            dataCorreccion.glisemiaActual.bold() +
                             " mg/dl y una meta de " +
                             dataCorreccion.meta +
                             " mg/dl, usted debe colocarse " +
@@ -600,7 +600,9 @@ export class ControlDiarioPage implements OnInit {
                   }
                 ]
               });
-              await prompt.present();
+              await prompt.present().then(() => {
+                document.getElementById("glisemiaActual").focus();
+              });
             }
           }
         }

@@ -1,15 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NavController, IonList, AlertController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Lista, ListaItem, ListaUser } from 'src/app/modelos';
 import { GlucoService } from 'src/app/services/glucodiario.services';
+import { ServicesUsuarioServiceProvider } from 'src/app/services/services-usuario-service';
 
 @Component({
   selector: "app-agregar",
   templateUrl: "./agregar.page.html",
   styleUrls: ["./agregar.page.scss"]
 })
-export class AgregarPage implements OnInit {
+export class AgregarPage implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    this.usuarioService.editarUsuario(this.datosUser);
+  }
   @ViewChild("list") list: IonList;
 
   
@@ -31,7 +35,8 @@ export class AgregarPage implements OnInit {
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
     public alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private usuarioService: ServicesUsuarioServiceProvider
   ) {
     this.datosUser = this.glucoService.cargarUltimoLogueo()[0];
     this.indexLista = Number(this.activatedRoute.snapshot.paramMap.get("indexLista"));
@@ -170,12 +175,8 @@ export class AgregarPage implements OnInit {
                         return;
                       } else {
                         nuevoDia.valorGlucometria = data.titulo;
-                        this.glucoService.agregarValorGlucometria(
-                          this.datosUser,
-                          nuevoDia,
-                          nuevoDia.valorGlucometria,
-                          this.indexLista
-                        );
+                        this.glucoService.agregarValorGlucometria(this.datosUser, nuevoDia, nuevoDia.valorGlucometria, this.indexLista);
+                        this.usuarioService.editarUsuario(this.datosUser);
                       }
                     }
                   }
@@ -273,6 +274,7 @@ export class AgregarPage implements OnInit {
           text: "Ok",
           handler: data => {
             this.glucoService.editarHora(this.datosUser, this.indexLista, indexItem, dia, data);
+            this.usuarioService.editarUsuario(this.datosUser);
           }
         }
       ]
@@ -310,6 +312,7 @@ export class AgregarPage implements OnInit {
             } else {
               dia.valorGlucometria = data.titulo;
               this.glucoService.editarValorGlucometria(this.datosUser, dia, data.titulo, this.indexLista, indexItem);
+              this.usuarioService.editarUsuario(this.datosUser);
             }
           }
         }
@@ -349,6 +352,7 @@ export class AgregarPage implements OnInit {
             this.glucoService.agregarNota(this.datosUser, this.lista, this.indexLista, dia, data.nota, indexItem);
             this.glucoService.cargarUltimoLogueo()[0];
             this.glucoService.guardarStorage();
+            this.usuarioService.editarUsuario(this.datosUser);
           }
         }
       ]
@@ -396,6 +400,7 @@ export class AgregarPage implements OnInit {
           text: "Eliminar",
           handler: () => {
             this.glucoService.borrarDia( this.datosUser, this.indexLista, indexItem);
+            this.usuarioService.editarUsuario(this.datosUser);
           }
         },
         {
@@ -438,6 +443,7 @@ export class AgregarPage implements OnInit {
               return;
             }
             this.glucoService.editarDia(this.datosUser, this.lista, this.indexLista, dia, data.nombre, indexItem);
+            this.usuarioService.editarUsuario(this.datosUser);
           }
         }
       ]
@@ -454,8 +460,8 @@ export class AgregarPage implements OnInit {
     return validacion;
   }
 
- async calcular() {
-    const alert = await this.alertCtrl.create({
+  async calcular() {
+    let alert = await this.alertCtrl.create({
       header: "Calcular",
       cssClass: "fondoAgregar",
       inputs: [
@@ -474,25 +480,26 @@ export class AgregarPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            // console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ir',
-          handler: async (data) => {
+          text: "Cancelar",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {}
+        },
+        {
+          text: "Ir",
+          handler: async data => {
             if (data == "bolus") {
               console.log("Pasar bolus");
               const prompt = await this.alertCtrl.create({
                 header: "Bolus",
-                message: "Ingrese los gramos de carbohidratos que va a consumir",
+                message:
+                  "Ingrese los gramos de carbohidratos que va a consumir",
                 inputs: [
                   {
                     name: "carbohidratos",
                     placeholder: "gr de carbohidratos",
-                    type: "number"
+                    type: "number",
+                    id: 'carbohidratos'
                   }
                 ],
                 buttons: [
@@ -508,27 +515,38 @@ export class AgregarPage implements OnInit {
                       console.log(dataBolus);
                       if (dataBolus.carbohidratos == "") {
                         let toast = await this.toastCtrl.create({
-                          message: "El campo de los carbohidratos no debe se vacío",
+                          message:
+                            "El campo de los carbohidratos no debe se vacío",
                           duration: 3000,
                           position: "top"
                         });
                         await toast.present();
                       } else {
                         let cantidadInsulina: number =
-                          Math.round((parseInt(dataBolus.carbohidratos) / this.datosUser.ratio) * 100) / 100;
+                          Math.round(
+                            (parseInt(dataBolus.carbohidratos) /
+                              this.datosUser.ratio) *
+                              100
+                          ) / 100;
                         const alert = await this.alertCtrl.create({
-                          header: cantidadInsulina.toString(),
-                          // subHeader: 'Unidades de insulina',
-                          message: `Esta es la cantidad de insulina a suministrar para ${dataBolus.carbohidratos} gr de carbohidratos.`,
+                          header: "Unidades de unsulina",
+                          subHeader:
+                            "Para " +
+                            dataBolus.carbohidratos +
+                            " gr de carbohidratos usted debe colocarse" +
+                            cantidadInsulina +
+                            " und de insulina.",
                           buttons: ["OK"]
                         });
-                        alert.present();
+                        await alert.present();
                       }
                     }
                   }
                 ]
               });
-              await prompt.present();
+              prompt.present().then(() => {
+                document.getElementById('carbohidratos').focus();
+              });
             } else if (data == "correccion") {
               const prompt = await this.alertCtrl.create({
                 header: "Corrección",
@@ -537,7 +555,8 @@ export class AgregarPage implements OnInit {
                   {
                     name: "glisemiaActual",
                     placeholder: "Glicemia actual",
-                    type: "number"
+                    type: "number",
+                    id: 'glisemiaActual'
                   },
                   {
                     name: "meta",
@@ -548,40 +567,52 @@ export class AgregarPage implements OnInit {
                 buttons: [
                   {
                     text: "Cancelar",
-                    handler: dataCorreccion => { }
+                    handler: dataCorreccion => {}
                   },
                   {
                     text: "Calcular",
                     handler: async dataCorreccion => {
                       console.log(dataCorreccion.glisemiaActual);
                       console.log(dataCorreccion.meta);
-                      if ( dataCorreccion.glisemiaActual == "" || dataCorreccion.meta == "") {
+                      if (
+                        dataCorreccion.glisemiaActual == "" ||
+                        dataCorreccion.meta == ""
+                      ) {
                         let toast = await this.toastCtrl.create({
                           message: "Los campos no deben ser vacíos",
                           duration: 3000,
                           position: "top"
                         });
-                        await toast.present();
+                        toast.present();
                       } else {
                         let cantidadInsulina: number =
                           Math.round(
                             ((parseInt(dataCorreccion.glisemiaActual) -
                               parseInt(dataCorreccion.meta)) /
                               this.datosUser.sensibilidad) *
-                            100
+                              100
                           ) / 100;
                         const alert = await this.alertCtrl.create({
-                          header: cantidadInsulina.toString(),
-                          message: "Para una glicemia actual de " + dataCorreccion.glisemiaActual + " mg/dl y una meta de " + dataCorreccion.meta + " mg/dl, usted debe colocarse estas unds de insulina.",
+                          header: "Unidades de unsulina",
+                          subHeader:
+                            "Para una glicemia actual de " +
+                            dataCorreccion.glisemiaActual.bold() +
+                            " mg/dl y una meta de " +
+                            dataCorreccion.meta +
+                            " mg/dl, usted debe colocarse " +
+                            cantidadInsulina +
+                            " und de insulina.",
                           buttons: ["OK"]
                         });
-                        await alert.present();
+                        alert.present();
                       }
                     }
                   }
                 ]
               });
-              await prompt.present();
+              await prompt.present().then(() => {
+                document.getElementById("glisemiaActual").focus();
+              });
             }
           }
         }
@@ -590,6 +621,7 @@ export class AgregarPage implements OnInit {
 
     await alert.present();
   }
+
 
   irAComidas() {
     this.navCtrl.navigateBack("/carbohidratos");

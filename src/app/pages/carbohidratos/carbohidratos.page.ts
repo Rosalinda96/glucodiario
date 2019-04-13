@@ -95,7 +95,7 @@ export class CarbohidratosPage implements OnInit {
   }
 
   async calcular() {
-    const alert = await this.alertCtrl.create({
+    let alert = await this.alertCtrl.create({
       header: "Calcular",
       cssClass: "fondoAgregar",
       inputs: [
@@ -117,9 +117,7 @@ export class CarbohidratosPage implements OnInit {
           text: "Cancelar",
           role: "cancel",
           cssClass: "secondary",
-          handler: () => {
-            // console.log('Confirm Cancel');
-          }
+          handler: () => {}
         },
         {
           text: "Ir",
@@ -134,7 +132,8 @@ export class CarbohidratosPage implements OnInit {
                   {
                     name: "carbohidratos",
                     placeholder: "gr de carbohidratos",
-                    type: "number"
+                    type: "number",
+                    id: 'carbohidratos'
                   }
                 ],
                 buttons: [
@@ -164,20 +163,24 @@ export class CarbohidratosPage implements OnInit {
                               100
                           ) / 100;
                         const alert = await this.alertCtrl.create({
-                          header: cantidadInsulina.toString(),
-                          // subHeader: 'Unidades de insulina',
-                          message: `Esta es la cantidad de insulina a suministrar para ${
-                            dataBolus.carbohidratos
-                          } gr de carbohidratos.`,
+                          header: "Unidades de unsulina",
+                          subHeader:
+                            "Para " +
+                            dataBolus.carbohidratos +
+                            " gr de carbohidratos usted debe colocarse" +
+                            cantidadInsulina +
+                            " und de insulina.",
                           buttons: ["OK"]
                         });
-                        alert.present();
+                        await alert.present();
                       }
                     }
                   }
                 ]
               });
-              await prompt.present();
+              prompt.present().then(() => {
+                document.getElementById('carbohidratos').focus();
+              });
             } else if (data == "correccion") {
               const prompt = await this.alertCtrl.create({
                 header: "Corrección",
@@ -186,7 +189,8 @@ export class CarbohidratosPage implements OnInit {
                   {
                     name: "glisemiaActual",
                     placeholder: "Glicemia actual",
-                    type: "number"
+                    type: "number",
+                    id: 'glisemiaActual'
                   },
                   {
                     name: "meta",
@@ -213,7 +217,7 @@ export class CarbohidratosPage implements OnInit {
                           duration: 3000,
                           position: "top"
                         });
-                        await toast.present();
+                        toast.present();
                       } else {
                         let cantidadInsulina: number =
                           Math.round(
@@ -223,22 +227,26 @@ export class CarbohidratosPage implements OnInit {
                               100
                           ) / 100;
                         const alert = await this.alertCtrl.create({
-                          header: cantidadInsulina.toString(),
-                          message:
+                          header: "Unidades de unsulina",
+                          subHeader:
                             "Para una glicemia actual de " +
-                            dataCorreccion.glisemiaActual +
+                            dataCorreccion.glisemiaActual.bold() +
                             " mg/dl y una meta de " +
                             dataCorreccion.meta +
-                            " mg/dl, usted debe colocarse estas unds de insulina.",
+                            " mg/dl, usted debe colocarse " +
+                            cantidadInsulina +
+                            " und de insulina.",
                           buttons: ["OK"]
                         });
-                        await alert.present();
+                        alert.present();
                       }
                     }
                   }
                 ]
               });
-              await prompt.present();
+              await prompt.present().then(() => {
+                document.getElementById("glisemiaActual").focus();
+              });
             }
           }
         }
@@ -247,6 +255,10 @@ export class CarbohidratosPage implements OnInit {
 
     await alert.present();
   }
+
+
+// ------------------------------
+
   salir() {
     // // this.navCtrl.setRoot(PageLoginPage);
     // this.navCtrl.setRoot(MyApp);

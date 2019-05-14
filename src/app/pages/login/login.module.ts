@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
+import { TerminosCondicionesPage } from '../terminos-condiciones/terminos-condiciones.page';
+import { TerminosCondicionesPageModule } from '../terminos-condiciones/terminos-condiciones.module';
+
 
 const routes: Routes = [
   {
@@ -15,10 +18,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents:[TerminosCondicionesPage],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TerminosCondicionesPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [LoginPage]

@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { GlucoService } from "src/app/services/glucodiario.services";
-import {  MenuController, NavController, AlertController, ToastController, LoadingController, IonSlides, } from "@ionic/angular";
+// tslint:disable-next-line: max-line-length
+import { MenuController, NavController, AlertController, ToastController, LoadingController, IonSlides, ModalController } from '@ionic/angular';
 import { ListaUser } from "src/app/modelos";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { ServicesUsuarioServiceProvider } from "src/app/services/services-usuario-service";
 import { File } from "@ionic-native/file/ngx";
 import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { Network } from "@ionic-native/network/ngx";
+import { TerminosCondicionesPage } from '../terminos-condiciones/terminos-condiciones.page';
 
 @Component({
   selector: "app-login",
@@ -36,6 +38,12 @@ export class LoginPage implements OnInit {
   loadingProperty: any;
   conectado = true;
 
+  mod: boolean = false;
+
+  ban1 = 0;
+  ban2 = 0;
+
+
   constructor(
     private glucoService: GlucoService,
     public menu: MenuController,
@@ -47,7 +55,8 @@ export class LoginPage implements OnInit {
     private usuarioService: ServicesUsuarioServiceProvider,
     private file: File,
     private fileOpener: FileOpener,
-    private network: Network
+    private network: Network,
+    private modalCtrl: ModalController
   ) {
     this.statusBar.show();
     this.glucoService.cargarUltimoLogueo();
@@ -90,6 +99,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.slides.scrollbar = false;
+    this.ban1 = 1;
   }
 
   // ---------------------------------
@@ -154,7 +164,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancelar",
           role: "cancel",
-          handler: data => {
+          handler: _data => {
             console.log("Cancel clicked");
           }
         },
@@ -244,12 +254,40 @@ export class LoginPage implements OnInit {
 
   // ---------------------------------------
 
-  async agregarUsuario(
-    nombres: string = "",
-    apellidos: string = "",
-    user: string = "",
-    pass1: string = "",
-    pass2: string = ""
+async agregarUsuario(
+nombres: string = "",
+apellidos: string = "",
+user: string = "",
+pass1: string = "",
+pass2: string = "") {
+
+  if (this.ban1 === 1) {
+    this.presentModal();
+    this.ban1 = 0;
+  } else {
+    console.log('no entro');
+  }
+   if (this.ban2 === 2){
+    this.agregarUsuario2();
+   }
+}
+
+async presentModal() {
+  const modal = await this.modalCtrl.create({
+    component: TerminosCondicionesPage,
+    componentProps: {}
+  });
+  this.ban2 = 2;
+  await modal.present();
+  return;
+}
+
+  async agregarUsuario2(
+  nombres: string = "",
+  apellidos: string = "",
+  user: string = "",
+  pass1: string = "",
+  pass2: string = ""
   ) {
     let alert = await this.alertCtrl.create({
       header: "Cree su usuario de GlucoDiario",
@@ -299,10 +337,11 @@ export class LoginPage implements OnInit {
         {
           text: "Cancelar",
           role: "cancel",
-          handler: data => {
+          handler: _data => {
+            this.ban1 = 0;
             this.presentToast("Usted canceló la creación de su usuario");
             this.alertCtrl.dismiss();
-            return;
+           return ;
           }
         },
         {
@@ -321,7 +360,8 @@ export class LoginPage implements OnInit {
               this.password2 == ""
             ) {
               this.presentToast("Verifique nuevamente y no deje campos vacíos");
-              this.agregarUsuario(
+              this.ban1 = 0;
+              this.agregarUsuario2(
                 this.nombres,
                 this.apellidos,
                 this.user,
@@ -333,7 +373,8 @@ export class LoginPage implements OnInit {
                 this.presentToast(
                   "La contraseña y su confirmación no coinsiden"
                 );
-                this.agregarUsuario(
+                this.ban1 = 0;
+                this.agregarUsuario2(
                   this.nombres,
                   this.apellidos,
                   this.user,
@@ -351,7 +392,7 @@ export class LoginPage implements OnInit {
 
                       if (usuarios.length == 0) {
                         this.menu.toggle();
-                        this.alerta2();
+                        // this.alerta2();
                       } else {
                         let encontrado: boolean = false;
                         for (let i = 0; i < usuarios.length; i++) {
@@ -363,7 +404,8 @@ export class LoginPage implements OnInit {
                           this.presentToast(
                             "Este usuario ya existe en la base de datos"
                           );
-                          this.agregarUsuario(
+                          this.ban1 = 0;
+                          this.agregarUsuario2(
                             this.nombres,
                             this.apellidos,
                             "",
@@ -371,7 +413,7 @@ export class LoginPage implements OnInit {
                             this.password2
                           );
                           return;
-                        } else {
+                        }  else {
                           this.alerta2();
                         }
                       }
@@ -392,6 +434,8 @@ export class LoginPage implements OnInit {
     });
   }
 
+ 
+
   async alerta2() {
     let alert2 = await this.alertCtrl.create({
       header: "Cree su usuario de GlucoDiario",
@@ -411,13 +455,16 @@ export class LoginPage implements OnInit {
           label: "Tipo 2",
           value: "2"
         }
+
       ],
+
       buttons: [
         {
           text: "<< Atrás",
           role: "cancel",
-          handler: data2 => {
-            this.agregarUsuario(
+          handler: _data2 => {
+            this.ban1 = 0;
+            this.agregarUsuario2(
               this.nombres,
               this.apellidos,
               this.user,
@@ -457,11 +504,14 @@ export class LoginPage implements OnInit {
               return;
             }
           }
-        }
+        },
       ]
     });
+
     alert2.present();
   }
+
+ 
 
   async alerta3() {
     let alert3 = await this.alertCtrl.create({
@@ -482,7 +532,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancelar",
           role: "cancel",
-          handler: data3 => {
+          handler: _data3 => {
             this.presentToast("Usted canceló la creación de su usuario");
             this.alerta2();
           }
@@ -544,7 +594,7 @@ export class LoginPage implements OnInit {
         {
           text: "Cancelar",
           role: "cancel",
-          handler: data => {
+          handler: _data => {
             console.log("Cancel clicked");
           }
         },
@@ -638,6 +688,7 @@ export class LoginPage implements OnInit {
     switch (opcion) {
       case "registro":
         this.agregarUsuario("", "", "", "", "");
+        this.ban1 = 0;
         this.menu.toggle();
         break;
 

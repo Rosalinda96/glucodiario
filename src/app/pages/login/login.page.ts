@@ -38,11 +38,7 @@ export class LoginPage implements OnInit {
   loadingProperty: any;
   conectado = true;
 
-  mod: boolean = false;
-
-  ban1 = 0;
-  ban2 = 0;
-
+  mod = false;
 
   constructor(
     private glucoService: GlucoService,
@@ -99,7 +95,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.slides.scrollbar = false;
-    this.ban1 = 1;
+    this.mod = true;
   }
 
   // ---------------------------------
@@ -261,13 +257,11 @@ user: string = "",
 pass1: string = "",
 pass2: string = "") {
 
-  if (this.ban1 === 1) {
+  if (this.mod === true) {
     this.presentModal();
-    this.ban1 = 0;
-  } else {
-    console.log('no entro');
   }
-   if (this.ban2 === 2){
+
+   if (this.mod === false){
     this.agregarUsuario2();
    }
 }
@@ -277,7 +271,7 @@ async presentModal() {
     component: TerminosCondicionesPage,
     componentProps: {}
   });
-  this.ban2 = 2;
+  this.mod = false;
   await modal.present();
   return;
 }
@@ -338,7 +332,6 @@ async presentModal() {
           text: "Cancelar",
           role: "cancel",
           handler: _data => {
-            this.ban1 = 0;
             this.presentToast("Usted canceló la creación de su usuario");
             this.alertCtrl.dismiss();
            return ;
@@ -360,7 +353,6 @@ async presentModal() {
               this.password2 == ""
             ) {
               this.presentToast("Verifique nuevamente y no deje campos vacíos");
-              this.ban1 = 0;
               this.agregarUsuario2(
                 this.nombres,
                 this.apellidos,
@@ -373,7 +365,6 @@ async presentModal() {
                 this.presentToast(
                   "La contraseña y su confirmación no coinsiden"
                 );
-                this.ban1 = 0;
                 this.agregarUsuario2(
                   this.nombres,
                   this.apellidos,
@@ -404,7 +395,6 @@ async presentModal() {
                           this.presentToast(
                             "Este usuario ya existe en la base de datos"
                           );
-                          this.ban1 = 0;
                           this.agregarUsuario2(
                             this.nombres,
                             this.apellidos,
@@ -463,7 +453,6 @@ async presentModal() {
           text: "<< Atrás",
           role: "cancel",
           handler: _data2 => {
-            this.ban1 = 0;
             this.agregarUsuario2(
               this.nombres,
               this.apellidos,
@@ -496,7 +485,7 @@ async presentModal() {
               // this.glucoService.cargarUltimoLogueo().push(nuevoUser);
               // this.glucoService.guardarUltimoLogueo();
               this.usuarioService.crearUsuario(nuevoUser);
-              this.toggleMenu();
+              // this.toggleMenu();
               this.presentToast(
                 "El usuario ha sido registrado en la base de datos con éxito"
               );
@@ -557,7 +546,7 @@ async presentModal() {
             // this.glucoService.cargarUltimoLogueo().push(nuevoUser);
             // this.glucoService.guardarUltimoLogueo();
             this.usuarioService.crearUsuario(nuevoUser);
-            this.toggleMenu();
+            // this.toggleMenu();
             this.presentToast(
               "El usuario ha sido registrado en la base de datos con éxito"
             );
@@ -688,7 +677,6 @@ async presentModal() {
     switch (opcion) {
       case "registro":
         this.agregarUsuario("", "", "", "", "");
-        this.ban1 = 0;
         this.menu.toggle();
         break;
 
